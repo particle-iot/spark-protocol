@@ -162,19 +162,6 @@ Flasher.prototype = extend(IFlasher.prototype, {
             var that = this;
             process.nextTick(function () { that.onSuccess(); });
         }
-
-        if (this.startTime) {
-            try {
-                var elapsed = ((new Date()) - this.startTime) / 1000.0;
-                if (global.HealthChecker) {
-                    global.HealthChecker.movingAverage("AverageFlash", elapsed, 100);
-                }
-            }
-            catch (ex) {
-                logger.error("Error measuring flash time ", ex);
-            }
-        }
-
     },
 
     cleanup: function () {

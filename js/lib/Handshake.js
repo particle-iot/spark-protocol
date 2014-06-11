@@ -141,13 +141,6 @@ Handshake.prototype = extend(IHandshake.prototype, {
         catch (ex) { }
 
         logger.error("Handshake failed: ", msg, logInfo);
-
-        if (global.HealthChecker) {
-            global.HealthChecker.deltaExpires("handshake_fail", 1);
-        }
-        if (global.mainServer) {
-            global.mainServer.trackBadHandshake(logInfo['ip'], logInfo['coreID']);
-        }
         this.clearGlobalTimeout();
     },
 
