@@ -3,6 +3,7 @@
 var settings = require('../settings.js');
 var CryptoLib = require('../lib/ICrypto.js');
 var SparkCore = require('../clients/SparkCore.js');
+var EventPublisher = require('../lib/EventPublisher.js');
 var logger = require('../lib/logger.js');
 var crypto = require('crypto');
 var ursa = require('ursa');
@@ -41,6 +42,8 @@ var connId = 0,
             }
         });
     });
+global.cores = _cores;
+global.publisher = new EventPublisher();
 
 server.on('error', function () {
     logger.error("something blew up ", arguments);

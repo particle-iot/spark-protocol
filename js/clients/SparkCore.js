@@ -136,8 +136,10 @@ SparkCore.prototype = extend(ISparkCore.prototype, EventEmitter.prototype, {
      * @param sender
      * @param response
      */
-    sendApiResponse: function (sender, response) { },
-
+    sendApiResponse: function (sender, response) {
+        //such boom, wow, very events.
+        this.emit(sender, response);
+    },
 
 
     /**
