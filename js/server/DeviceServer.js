@@ -11,12 +11,20 @@ var net = require('net');
 var fs = require('fs');
 
 
-var DeviceServer = function () {
-
+var DeviceServer = function (options) {
+    this.options = options;
 };
+
 DeviceServer.prototype = {
     start: function () {
 
+        //TODO: something much better than this.
+        if (this.options) {
+            if (this.options.coreKeysDir) {
+                settings.coreKeysDir = this.options.coreKeysDir;
+            }
+        }
+        global.settings = settings;
 
         //
         //  Create our basic socket handler
@@ -48,6 +56,7 @@ DeviceServer.prototype = {
                     }
                 });
             });
+
         global.cores = _cores;
         global.publisher = new EventPublisher();
 
@@ -60,6 +69,7 @@ DeviceServer.prototype = {
         //  Load the provided key, or generate one
         //
         if (!fs.existsSync(settings.serverKeyFile)) {
+            console.warn("Creating NEW server key");
             var keys = ursa.generatePrivateKey();
 
 
@@ -78,6 +88,7 @@ DeviceServer.prototype = {
         //
         //  Load our server key
         //
+        console.info("Loading server key from " + settings.serverKeyFile);
         CryptoLib.loadServerKeys(
             settings.serverKeyFile,
             settings.serverKeyPassFile,

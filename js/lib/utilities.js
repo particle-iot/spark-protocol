@@ -287,7 +287,7 @@ module.exports = {
 
 
     get_core_key: function(coreid, callback) {
-        var keyFile = path.join(settings.coreKeysDir, coreid + ".pub.pem");
+        var keyFile = path.join(global.settings.coreKeysDir || settings.coreKeysDir, coreid + ".pub.pem");
         if (!fs.existsSync(keyFile)) {
             logger.log("Expected to find public key for core " + coreid + " at " + keyFile);
             return null;
