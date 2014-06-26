@@ -15,11 +15,16 @@ var fs = require('fs');
 var DeviceServer = function (options) {
     this.options = options;
     this._allCoresByID = {};
+    this._attribsByID = {};
+    this._allIDs = {};
+
     this.init();
 };
 
 DeviceServer.prototype = {
     _allCoresByID: null,
+    _attribsByID: null,
+    _allIDs: null,
 
 
     init: function () {
@@ -28,23 +33,24 @@ DeviceServer.prototype = {
 
 
     loadCoreData: function (coreDir) {
-        var coresByID = {};
+        var attribsByID = {};
 
         var files = fs.readdirSync(settings.coreKeysDir);
         for (var i = 0; i < files.length; i++) {
-            var filename = files[i];
-            var fullPath = path.join(settings.coreKeysDir, filename);
-            var ext = utilities.getFilenameExt(filename) ;
+            var filename = files[i],
+                fullPath = path.join(settings.coreKeysDir, filename),
+                ext = utilities.getFilenameExt(filename) ;
 
             if (ext == ".pem") {
-                var id = utilities.filenameNoExt(filename);
-                coresByID[id] = coresByID[id] || {};
+                var id = utilities.filenameNoExt(utilities.filenameNoExt(filename));
+                this._allIDs[id] = true;
             }
             else if (ext == ".json") {
                 try {
                     var contents = fs.readFileSync(fullPath);
                     var core = JSON.parse(contents);
-                    coresByID[core.coreID] = core;
+                    attribsByID[core.coreID] = core;
+                    this._allIDs[core.coreID] = true;
                 }
                 catch (ex) {
                     logger.error("Error loading core file " + filename);
@@ -52,11 +58,24 @@ DeviceServer.prototype = {
             }
         }
 
-        this._allCoresByID = coresByID;
+        this._attribsByID = attribsByID;
     },
 
     getCore: function(coreid) {
         return this._allCoresByID[coreid];
+    },
+    getCoreAttributes: function(coreid) {
+        return this._attribsByID[coreid];
+    },
+    getCoreByName: function(name) {
+        var cores = this._allCoresByID;
+        for(var coreid in cores) {
+            var core = cores[coreid];
+            if (core.attribs && (core.attribs.name == name)) {
+                return core;
+            }
+        }
+        return null;
     },
 
     getAllCores: function () {
@@ -105,6 +124,13 @@ DeviceServer.prototype = {
                             logger.log("Core online!");
                             var coreid = this.getHexCoreID();
                             that._allCoresByID[coreid] = core;
+                            that._attribsByID = that._attribsByID[coreid] || {
+                                coreID: coreid,
+                                name: null,
+                                ip: this.getRemoteIPAddress(),
+                                product_id: this.spark_product_id,
+                                firmware_version: this.product_firmware_version
+                            };
                         });
                         core.on('disconnect', function (msg) {
                             logger.log("Session ended for " + connId);
