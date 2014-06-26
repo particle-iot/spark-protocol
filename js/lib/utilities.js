@@ -284,7 +284,32 @@ module.exports = {
         var idx = str.indexOf(sub);
         return (idx == (str.length - sub.length));
     },
+    getFilenameExt: function (filename) {
+        if (!filename || (filename.length === 0)) {
+            return filename;
+        }
 
+        var idx = filename.lastIndexOf('.');
+        if (idx >= 0) {
+            return filename.substr(idx);
+        }
+        else {
+            return filename;
+        }
+    },
+    filenameNoExt: function (filename) {
+        if (!filename || (filename.length === 0)) {
+            return filename;
+        }
+
+        var idx = filename.lastIndexOf('.');
+        if (idx >= 0) {
+            return filename.substr(0, idx);
+        }
+        else {
+            return filename;
+        }
+    },
 
     get_core_key: function(coreid, callback) {
         var keyFile = path.join(global.settings.coreKeysDir || settings.coreKeysDir, coreid + ".pub.pem");

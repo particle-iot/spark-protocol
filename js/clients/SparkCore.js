@@ -45,6 +45,7 @@ var SparkCore = function (options) {
         this.options = extend(this.options, options);
     }
 
+    EventEmitter.call(this);
     this._tokens = {};
 };
 
@@ -138,7 +139,12 @@ SparkCore.prototype = extend(ISparkCore.prototype, EventEmitter.prototype, {
      */
     sendApiResponse: function (sender, response) {
         //such boom, wow, very events.
-        this.emit(sender, response);
+        try {
+            this.emit(sender, sender, response);
+        }
+        catch (ex) {
+            logger.error("Error during response ", ex);
+        }
     },
 
 

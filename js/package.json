@@ -1,6 +1,6 @@
 {
     "name": "spark-protocol",
-    "version": "0.0.6",
+    "version": "0.0.7",
     "main": "./index.js",
     "dependencies": {
         "buffer-crc32": "~0.2.1",
