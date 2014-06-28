@@ -39,7 +39,7 @@ DeviceServer.prototype = {
         for (var i = 0; i < files.length; i++) {
             var filename = files[i],
                 fullPath = path.join(settings.coreKeysDir, filename),
-                ext = utilities.getFilenameExt(filename) ;
+                ext = utilities.getFilenameExt(filename);
 
             if (ext == ".pem") {
                 var id = utilities.filenameNoExt(utilities.filenameNoExt(filename));
@@ -61,18 +61,19 @@ DeviceServer.prototype = {
         this._attribsByID = attribsByID;
     },
 
-    getCore: function(coreid) {
+    getCore: function (coreid) {
         return this._allCoresByID[coreid];
     },
-    getCoreAttributes: function(coreid) {
+    getCoreAttributes: function (coreid) {
         return this._attribsByID[coreid];
     },
-    getCoreByName: function(name) {
-        var cores = this._allCoresByID;
-        for(var coreid in cores) {
-            var core = cores[coreid];
-            if (core.attribs && (core.attribs.name == name)) {
-                return core;
+    getCoreByName: function (name) {
+        //var cores = this._allCoresByID;
+        var cores = that._attribsByID;
+        for (var coreid in cores) {
+            var attribs = cores[coreid];
+            if (attribs && (attribs.name == name)) {
+                return this._allCoresByID[coreid];
             }
         }
         return null;
@@ -120,7 +121,7 @@ DeviceServer.prototype = {
 
 
                         _cores[key] = core;
-                        core.on('ready', function() {
+                        core.on('ready', function () {
                             logger.log("Core online!");
                             var coreid = this.getHexCoreID();
                             that._allCoresByID[coreid] = core;
