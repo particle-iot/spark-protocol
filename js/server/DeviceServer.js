@@ -14,6 +14,8 @@ var fs = require('fs');
 
 var DeviceServer = function (options) {
     this.options = options;
+    this.options = options || {};
+    this.options.coreKeysDir = this.options.coreKeysDir || settings.coreKeysDir;
     this._allCoresByID = {};
     this._attribsByID = {};
     this._allIDs = {};
@@ -32,25 +34,29 @@ DeviceServer.prototype = {
     },
 
 
-    loadCoreData: function (coreDir) {
+    loadCoreData: function () {
         var attribsByID = {};
 
-        var files = fs.readdirSync(settings.coreKeysDir);
+        var files = fs.readdirSync(this.options.coreKeysDir);
         for (var i = 0; i < files.length; i++) {
             var filename = files[i],
-                fullPath = path.join(settings.coreKeysDir, filename),
-                ext = utilities.getFilenameExt(filename);
+                fullPath = path.join(this.options.coreKeysDir, filename),
+                ext = utilities.getFilenameExt(filename),
+                id = utilities.filenameNoExt(utilities.filenameNoExt(filename));
 
             if (ext == ".pem") {
-                var id = utilities.filenameNoExt(utilities.filenameNoExt(filename));
+                console.log("found " + id);
                 this._allIDs[id] = true;
             }
             else if (ext == ".json") {
                 try {
                     var contents = fs.readFileSync(fullPath);
                     var core = JSON.parse(contents);
-                    attribsByID[core.coreID] = core;
-                    this._allIDs[core.coreID] = true;
+                    core.coreID = core.coreID || id;
+                    attribsByID[core.coreID ] = core;
+
+                    console.log("found " + core.coreID);
+                    this._allIDs[core.coreID ] = true;
                 }
                 catch (ex) {
                     logger.error("Error loading core file " + filename);
@@ -61,15 +67,46 @@ DeviceServer.prototype = {
         this._attribsByID = attribsByID;
     },
 
+    saveCoreData: function (coreid, attribs) {
+        try {
+            //assert basics
+            attribs = attribs || {};
+//            attribs["coreID"] = coreid;
+
+            var jsonStr = JSON.stringify(attribs, null, 2);
+            if (!jsonStr) {
+                return false;
+            }
+
+            var fullPath = path.join(this.options.coreKeysDir, coreid + ".json");
+            fs.writeFileSync(fullPath, jsonStr);
+            return true;
+        }
+        catch (ex) {
+            logger.error("Error saving core data ", ex);
+        }
+        return false;
+    },
+
     getCore: function (coreid) {
         return this._allCoresByID[coreid];
     },
     getCoreAttributes: function (coreid) {
+        //assert this exists and is set properly when asked.
+        this._attribsByID[coreid] = this._attribsByID[coreid] || {};
+        //this._attribsByID[coreid]["coreID"] = coreid;
+
         return this._attribsByID[coreid];
+    },
+    setCoreAttribute: function (coreid, name, value) {
+        this._attribsByID[coreid] = this._attribsByID[coreid] || {};
+        this._attribsByID[coreid][name] = value;
+        this.saveCoreData(coreid, this._attribsByID[coreid]);
+        return true;
     },
     getCoreByName: function (name) {
         //var cores = this._allCoresByID;
-        var cores = that._attribsByID;
+        var cores = this._attribsByID;
         for (var coreid in cores) {
             var attribs = cores[coreid];
             if (attribs && (attribs.name == name)) {
@@ -79,6 +116,18 @@ DeviceServer.prototype = {
         return null;
     },
 
+    /**
+     * return all the cores we know exist
+     * @returns {null}
+     */
+    getAllCoreIDs: function () {
+        return this._allIDs;
+    },
+
+    /**
+     * return all the cores that are connected
+     * @returns {null}
+     */
     getAllCores: function () {
         return this._allCoresByID;
     },
@@ -91,13 +140,6 @@ DeviceServer.prototype = {
 
 
     start: function () {
-
-        //TODO: something much better than this.
-        if (this.options) {
-            if (this.options.coreKeysDir) {
-                settings.coreKeysDir = this.options.coreKeysDir;
-            }
-        }
         global.settings = settings;
 
         //
