@@ -1028,12 +1028,11 @@ SparkCore.prototype = extend(ISparkCore.prototype, EventEmitter.prototype, {
 
 
         try {
-            if (!this.apiSocket) {
-                //are we a virtual core?
+            if (!global.publisher) {
                 return;
             }
 
-            if (!this.apiSocket.sendEvent(isPublic, obj.name, obj.userid, obj.data, obj.ttl, obj.published_at)) {
+            if (!global.publisher.publish(isPublic, obj.name, obj.userid, obj.data, obj.ttl, obj.published_at, this.getHexCoreID())) {
                 //this core is over its limit, and that message was not sent.
                 this.sendReply("EventSlowdown", msg.getId());
             }
