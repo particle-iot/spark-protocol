@@ -18,10 +18,10 @@ What do I need to know?
 
   This module knows how to talk encrypted CoAP.  It's really good at talking with Spark Cores, and any other hardware that uses this protocol.  You'll need a server key to use and load onto your devices.  You'll also need to grab any public keys for your connected devices and store them somewhere this module can find them.  The public server key stored on the device can also store an IP address or DNS name for your server, so make sure you load that onto your server key when copying it to your device.  The server will also generate a default key if you don't have one when it starts up.
 
-What bare minimum modules should I care about?
+What code modules should I start with?
 ============================================
 
-There's lots of fun stuff here, but in particular you should know about the "SparkCore", and "DeviceService" modules.  The "DeviceService" module runs a server that creates "SparkCore" objects, which represent your connected devices.
+There's lots of fun stuff here, but in particular you should know about the "SparkCore" ( https://github.com/spark/spark-protocol/blob/master/js/clients/SparkCore.js ) , and "DeviceServer" ( https://github.com/spark/spark-protocol/blob/master/js/server/DeviceServer.js ) modules.  The "DeviceServer" module runs a server that creates "SparkCore" objects, which represent your connected devices.
 
 
 How do I start a server in code?
