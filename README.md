@@ -1,13 +1,7 @@
-
-
-
-
 spark-protocol
 ================
 
   Node.JS module for hosting direct encrypted CoAP socket connections
-
-testing...
 
 <pre>
                           __      __        __              __
@@ -17,4 +11,30 @@ testing...
 /____/ .___/\__,_/_/  /_/|_|   \__/\__,_/_.___/\___/____(_)   
     /_/                                                       
 </pre>
+
+
+What do I need to know?
+========================
+
+  This module knows how to talk encrypted CoAP.  It's really good at talking with Spark Cores, and any other hardware that uses this protocol.  You'll need a server key to use and load onto your devices.  You'll also need to grab any public keys for your connected devices and store them somewhere this module can find them.  The public server key stored on the device can also store an IP address or DNS name for your server, so make sure you load that onto your server key when copying it to your device.  The server will also generate a default key if you don't have one when it starts up.
+
+What bare minimum modules should I care about?
+============================================
+
+There's lots of fun stuff here, but in particular you should know about the "SparkCore", and "DeviceService" modules.  The "DeviceService" module runs a server that creates "SparkCore" objects, which represent your connected devices.
+
+
+How do I start a server in code?
+---------------------------
+
+```
+var DeviceServer = require("spark-protocol").DeviceServer;
+var server = new DeviceServer({
+    coreKeysDir: "/path/to/your/public_device_keys"
+});
+global.server = server;
+server.start();
+
+```
+
 
