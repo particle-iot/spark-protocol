@@ -49,12 +49,19 @@ How do I get my key / ip address on my core?
 
 4.) Load the server key and include your IP address / dns address:
 
-`spark keys server server_public_key.der your_ip_address`
-`spark keys server server_public_key.der 192.168.1.10`
+```
+spark keys server server_public_key.der your_ip_address
+spark keys server server_public_key.der 192.168.1.10
+```
 
 5.) That's it!
 
 
+Where's the API / webserver stuff, this is just a TCP server?
+===========================================================================
 
+  Oh, you want the Spark-Server module here: https://github.com/spark/spark-server  :)
+  
+  
 
 
