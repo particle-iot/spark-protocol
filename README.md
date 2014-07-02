@@ -1,4 +1,20 @@
+
+
+
+
 spark-protocol
 ================
 
-Node.JS module for hosting direct encrypted CoAP socket connections
+  Node.JS module for hosting direct encrypted CoAP socket connections
+
+testing...
+
+<pre>
+                          __      __        __              __
+   _________  ____ ______/ /__   / /___  __/ /_  ___  _____/ /
+  / ___/ __ \/ __ `/ ___/ //_/  / __/ / / / __ \/ _ \/ ___/ / 
+ (__  ) /_/ / /_/ / /  / ,<    / /_/ /_/ / /_/ /  __(__  )_/  
+/____/ .___/\__,_/_/  /_/|_|   \__/\__,_/_.___/\___/____(_)   
+    /_/                                                       
+</pre>
+
