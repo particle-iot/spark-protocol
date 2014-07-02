@@ -167,7 +167,7 @@ DeviceServer.prototype = {
                             logger.log("Core online!");
                             var coreid = this.getHexCoreID();
                             that._allCoresByID[coreid] = core;
-                            that._attribsByID = that._attribsByID[coreid] || {
+                            that._attribsByID[coreid] = that._attribsByID[coreid] || {
                                 coreID: coreid,
                                 name: null,
                                 ip: this.getRemoteIPAddress(),
@@ -234,6 +234,5 @@ DeviceServer.prototype = {
 
     }
 
-}
-;
+};
 module.exports = DeviceServer;
