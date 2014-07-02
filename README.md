@@ -38,3 +38,23 @@ server.start();
 ```
 
 
+How do I get my key / ip address on my core?
+================================================
+
+1.) Figure out your IP address, for now lets say it's 192.168.1.10
+
+2.) Make sure you have the Spark-CLI (https://github.com/spark/spark-cli) installed
+
+3.) Connect your Spark Core to your computer in listening mode (http://docs.spark.io/connect/#appendix-dfu-mode-device-firmware-upgrade)
+
+4.) Load the server key and include your IP address / dns address:
+
+`spark keys server server_public_key.der your_ip_address`
+`spark keys server server_public_key.der 192.168.1.10`
+
+5.) That's it!
+
+
+
+
+
