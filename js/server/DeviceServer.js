@@ -37,6 +37,11 @@ DeviceServer.prototype = {
     loadCoreData: function () {
         var attribsByID = {};
 
+        if (!fs.existsSync(this.options.coreKeysDir)) {
+            console.log("core keys directory didn't exist, creating... " + this.options.coreKeysDir);
+            fs.mkdirSync(this.options.coreKeysDir);
+        }
+
         var files = fs.readdirSync(this.options.coreKeysDir);
         for (var i = 0; i < files.length; i++) {
             var filename = files[i],
