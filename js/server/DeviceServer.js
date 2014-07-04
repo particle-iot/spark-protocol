@@ -52,6 +52,12 @@ DeviceServer.prototype = {
             if (ext == ".pem") {
                 console.log("found " + id);
                 this._allIDs[id] = true;
+
+                if (!attribsByID[id]) {
+                    var core = {}
+                    core.coreID = id;
+                    attribsByID[id] = core;
+                }
             }
             else if (ext == ".json") {
                 try {
