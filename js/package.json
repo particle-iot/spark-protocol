@@ -1,7 +1,11 @@
 {
     "name": "spark-protocol",
-    "version": "0.0.8",
+    "version": "0.0.9",
     "main": "./index.js",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/spark/spark-protocol"
+    },
     "dependencies": {
         "buffer-crc32": "~0.2.1",
         "h5.buffers": "~0.1.1",
