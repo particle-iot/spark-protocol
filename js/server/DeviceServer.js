@@ -15,7 +15,8 @@ var fs = require('fs');
 var DeviceServer = function (options) {
     this.options = options;
     this.options = options || {};
-    this.options.coreKeysDir = this.options.coreKeysDir || settings.coreKeysDir;
+    settings.coreKeysDir = this.options.coreKeysDir = this.options.coreKeysDir || settings.coreKeysDir;
+
     this._allCoresByID = {};
     this._attribsByID = {};
     this._allIDs = {};
