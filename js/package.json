@@ -6,6 +6,7 @@
         "type": "git",
         "url": "https://github.com/spark/spark-protocol"
     },
+    "license": "LGPL-3.0",
     "dependencies": {
         "buffer-crc32": "~0.2.1",
         "h5.buffers": "~0.1.1",
