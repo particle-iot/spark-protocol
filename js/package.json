@@ -1,6 +1,6 @@
 {
     "name": "spark-protocol",
-    "version": "0.0.9",
+    "version": "0.0.91",
     "main": "./index.js",
     "repository": {
         "type": "git",
