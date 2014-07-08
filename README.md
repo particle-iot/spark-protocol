@@ -1,7 +1,7 @@
 spark-protocol
 ================
 
-  Node.JS module for hosting direct encrypted CoAP socket connections
+  Node.JS module for hosting direct encrypted CoAP socket connections!  Checkout the local [spark-server](https://github.com/spark/spark-server)
 
 <pre>
                           __      __        __              __
