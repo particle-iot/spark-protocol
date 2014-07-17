@@ -246,7 +246,7 @@ DeviceServer.prototype = {
             var keys = ursa.generatePrivateKey();
 
 
-            var extIdx = settings.serverKeyFile.lastIndexOf(".")
+            var extIdx = settings.serverKeyFile.lastIndexOf(".");
             var derFilename = settings.serverKeyFile.substring(0, extIdx) + ".der";
             var pubPemFilename = settings.serverKeyFile.substring(0, extIdx) + ".pub.pem";
 

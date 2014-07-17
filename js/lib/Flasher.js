@@ -290,6 +290,16 @@ Flasher.prototype = extend(IFlasher.prototype, {
         }
 
         this.chunk = (this.fileStream) ? this.fileStream.read(Flasher.CHUNK_SIZE) : null;
+
+        //workaround for https://github.com/spark/core-firmware/issues/238
+        if (this.chunk && (this.chunk.length != Flasher.CHUNK_SIZE)) {
+            var buf = new Buffer(Flasher.CHUNK_SIZE);
+            this.chunk.copy(buf, 0, 0, this.chunk.length);
+            buf.fill(0, this.chunk.length, Flasher.CHUNK_SIZE);
+            this.chunk = buf;
+        }
+        //end workaround
+
         this.lastCrc = (this.chunk) ? crc32.unsigned(this.chunk) : null;
     },
 
