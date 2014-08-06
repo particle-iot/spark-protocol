@@ -44,4 +44,6 @@ module.exports = {
      * How big can our tokens be in CoAP messages?
      */
     message_token_max: 255,
+
+    verboseProtocol: false
 };

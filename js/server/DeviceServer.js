@@ -202,6 +202,7 @@ DeviceServer.prototype = {
                         var core = new SparkCore();
                         core.socket = socket;
                         core.startupProtocol();
+                        core._connection_key = key;
 
                         //TODO: expose to API
 
@@ -220,7 +221,7 @@ DeviceServer.prototype = {
                             };
                         });
                         core.on('disconnect', function (msg) {
-                            logger.log("Session ended for " + connId);
+                            logger.log("Session ended for " + core._connection_key);
                             delete _cores[key];
                         });
                     }
