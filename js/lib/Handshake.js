@@ -200,6 +200,7 @@ Handshake.prototype = extend(IHandshake.prototype, {
                 }
 
                 this.clearGlobalTimeout();
+                this.flushEarlyData();
                 this.stage++;
                 break;
             default:
@@ -208,6 +209,25 @@ Handshake.prototype = extend(IHandshake.prototype, {
         }
     },
 
+    _pending: null,
+    queueEarlyData: function(name, data) {
+        if (!data) { return; }
+        if (!this._pending) { this._pending = []; }
+        this._pending.push(data);
+        logger.error("BOOM early data", {
+            step: name,
+            data: (data) ? data.toString('hex') : data,
+            cache_key: this.client._connection_key
+        });
+    },
+    flushEarlyData: function() {
+        if (this._pending) {
+            for(var i=0;i<this._pending.length;i++) {
+                this.routeToClient(this._pending[i]);
+            }
+            this._pending = null;
+        }
+    },
 
     onSocketData: function (data) {
         data = this.socket.read();
@@ -430,6 +450,9 @@ Handshake.prototype = extend(IHandshake.prototype, {
                 var chunk = that.secureIn.read();
                 if (that.stage > Handshake.stages.DONE) {
                     that.routeToClient(chunk);
+                }
+                else if (that.stage >= Handshake.stages.SEND_HELLO) {
+                    that.queueEarlyData(that.stage, chunk);
                 }
                 else {
                     that.nextStep(chunk);
