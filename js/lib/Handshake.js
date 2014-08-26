@@ -214,7 +214,7 @@ Handshake.prototype = extend(IHandshake.prototype, {
         if (!data) { return; }
         if (!this._pending) { this._pending = []; }
         this._pending.push(data);
-        logger.error("BOOM early data", {
+        logger.error("recovering from early data! ", {
             step: name,
             data: (data) ? data.toString('hex') : data,
             cache_key: this.client._connection_key
