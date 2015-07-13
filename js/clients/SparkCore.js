@@ -1,22 +1,20 @@
 /*
-*   Copyright (C) 2013-2014 Spark Labs, Inc. All rights reserved. -  https://www.spark.io/
+*   Copyright (c) 2015 Particle Industries, Inc.  All rights reserved.
 *
-*   This file is part of the Spark-protocol module
+*   This program is free software; you can redistribute it and/or
+*   modify it under the terms of the GNU Lesser General Public
+*   License as published by the Free Software Foundation, either
+*   version 3 of the License, or (at your option) any later version.
 *
-*   This program is free software: you can redistribute it and/or modify
-*   it under the terms of the GNU General Public License version 3
-*   as published by the Free Software Foundation.
-*
-*   Spark-protocol is distributed in the hope that it will be useful,
+*   This program is distributed in the hope that it will be useful,
 *   but WITHOUT ANY WARRANTY; without even the implied warranty of
-*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*   GNU General Public License for more details.
+*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+*   Lesser General Public License for more details.
 *
-*   You should have received a copy of the GNU General Public License
-*   along with Spark-protocol.  If not, see <http://www.gnu.org/licenses/>.
-*
-*   You can download the source here: https://github.com/spark/spark-protocol
+*   You should have received a copy of the GNU Lesser General Public
+*   License along with this program; if not, see <http://www.gnu.org/licenses/>.
 */
+
 
 var EventEmitter = require('events').EventEmitter;
 var moment = require('moment');

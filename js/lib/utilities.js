@@ -18,6 +18,7 @@
 *   You can download the source here: https://github.com/spark/spark-protocol
 */
 
+
 var logger = require('./logger.js');
 var when = require('when');
 var extend = require('xtend');
