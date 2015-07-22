@@ -346,6 +346,45 @@ module.exports = {
 
     },
 
+    /**
+	 * base64 encodes raw binary into
+	 * "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDHzg9dPG03Kv4NkS3N0xJfU8lT1M+s9HTs75DE1tpwXfU4GkfaLLr04j6jFpMeeggKCgWJsKyIAR9CNlVHC1IUYeejEJQCe6JReTQlq9F6bioK84nc9QsFTpiCIqeTAZE4t6Di5pF8qrUgQvREHrl4Nw0DR7ECODgxc/r5+XFh9wIDAQAB"
+	 * then formats into PEM format:
+	 *
+	 * //-----BEGIN PUBLIC KEY-----
+	 * //MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDHzg9dPG03Kv4NkS3N0xJfU8lT
+	 * //1M+s9HTs75DE1tpwXfU4GkfaLLr04j6jFpMeeggKCgWJsKyIAR9CNlVHC1IUYeej
+	 * //EJQCe6JReTQlq9F6bioK84nc9QsFTpiCIqeTAZE4t6Di5pF8qrUgQvREHrl4Nw0D
+	 * //R7ECODgxc/r5+XFh9wIDAQAB
+	 * //-----END PUBLIC KEY-----
+	 *
+	 * @param buf
+	 * @returns {*}
+	 */
+	convertDERtoPEM: function(buf) {
+		if (!buf || (buf.length == 0)) {
+			return null;
+		}
+		var str;
+		try {
+			str = buf.toString('base64');
+			var lines = [
+				"-----BEGIN PUBLIC KEY-----"
+			];
+			var i = 0;
+			while (i < str.length) {
+				var chunk = str.substr(i, 64);
+				i += chunk.length;
+				lines.push(chunk);
+			}
+			lines.push("-----END PUBLIC KEY-----");
+			return lines.join("\n");
+		}
+		catch(ex) {
+			logger.error("error converting DER to PEM, was: " + str);
+		}
+		return null;
+	},
 
     foo: null
 };
