@@ -519,17 +519,18 @@ Handshake.prototype = extend(IHandshake.prototype, {
             logger.log('error while parsing hello payload ', ex);
         }
 
-        //remind ourselves later that this key worked.
-        if (that.corePublicKeyWasUncertain) {
-            process.nextTick(function () {
-                try {
-                    database.set_preferred_corekey(that.coreFullPublicKeyObject);
-                }
-                catch (ex) {
-                    logger.error("error marking key as valid " + ex);
-                }
-            });
-        }
+//        //remind ourselves later that this key worked.
+//        if (that.corePublicKeyWasUncertain) {
+//            process.nextTick(function () {
+//                try {
+//					//set preferred key for device
+//					//that.coreFullPublicKeyObject
+//                }
+//                catch (ex) {
+//                    logger.error("error marking key as valid " + ex);
+//                }
+//            });
+//        }
 
 
         this.stage++;
