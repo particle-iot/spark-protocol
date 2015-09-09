@@ -358,8 +358,8 @@ Handshake.prototype = extend(IHandshake.prototype, {
 
         //success
         //plaintext should be 52 bytes, else fail
-        if (plaintext.length != (Handshake.NONCE_BYTES + Handshake.ID_BYTES)) {
-            that.handshakeFail("plaintext was the wrong size: " + plaintext.length);
+        if (plaintext.length < (Handshake.NONCE_BYTES + Handshake.ID_BYTES)) {
+			that.handshakeFail("plaintext was too small: " + plaintext.length);
             return;
         }
 
@@ -368,6 +368,13 @@ Handshake.prototype = extend(IHandshake.prototype, {
 
         plaintext.copy(vNonce, 0, 0, 40);
         plaintext.copy(vCoreID, 0, 40, 52);
+
+		if (plaintext.length > (Handshake.NONCE_BYTES + Handshake.ID_BYTES)) {
+			var coreKey = new Buffer(plaintext.length - 52);
+			plaintext.copy(coreKey, 0, 52, plaintext.length);
+			//console.log("got key ", coreKey.toString('hex'));
+			this.coreProvidedPem = utilities.convertDERtoPEM(coreKey);
+		}
 
         //nonces should match
         if (!utilities.bufferCompare(vNonce, that.nonce)) {
@@ -530,6 +537,18 @@ Handshake.prototype = extend(IHandshake.prototype, {
             logger.log('error while parsing hello payload ', ex);
         }
 
+//        //remind ourselves later that this key worked.
+//        if (that.corePublicKeyWasUncertain) {
+//            process.nextTick(function () {
+//                try {
+//					//set preferred key for device
+//					//that.coreFullPublicKeyObject
+//                }
+//                catch (ex) {
+//                    logger.error("error marking key as valid " + ex);
+//                }
+//            });
+//        }
 
 
         this.stage++;
