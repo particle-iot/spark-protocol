@@ -336,16 +336,23 @@ module.exports = {
         var keyFile = path.join(global.settings.coreKeysDir || settings.coreKeysDir, coreid + ".pub.pem");
         if (!fs.existsSync(keyFile)) {
             logger.log("Expected to find public key for core " + coreid + " at " + keyFile);
-            return null;
+			callback(null);
         }
         else {
             var keyStr = fs.readFileSync(keyFile).toString();
             var public_key = ursa.createPublicKey(keyStr, 'binary');
             callback(public_key);
         }
-
-
     },
+
+	save_handshake_key: function(coreid, pem) {
+		var keyFile = path.join(global.settings.coreKeysDir || settings.coreKeysDir, coreid + "_handshake.pub.pem");
+		if (!fs.existsSync(keyFile)) {
+
+			logger.log("I saved a key given during the handshake, (remove the _handshake from the filename to accept this device)", keyFile);
+			fs.writeFileSync(keyFile, pem);
+		}
+	},
 
     /**
 	 * base64 encodes raw binary into

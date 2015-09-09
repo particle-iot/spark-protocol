@@ -394,10 +394,15 @@ Handshake.prototype = extend(IHandshake.prototype, {
     // * Remaining 12 bytes of message represent STM32 ID.  Server retrieves the Core's public RSA key.
     // * If the public key is not found, Server must close the connection.
     get_corekey: function () {
+		var that = this;
         utilities.get_core_key(this.coreID, function (public_key) {
             try {
                 if (!public_key) {
                     that.handshakeFail("couldn't find key for core: " + this.coreID);
+					if (that.coreProvidedPem) {
+						utilities.save_handshake_key(that.coreID, that.coreProvidedPem);
+					}
+
                     return;
                 }
 
