@@ -69,11 +69,28 @@ CryptoStream.prototype.getCipher = function (callback) {
     cipher.on('readable', function () {
         var chunk = cipher.read();
 
-        if (!ciphertext) {
-            ciphertext = chunk;
-        }
-        else {
-            ciphertext = Buffer.concat([ciphertext, chunk], ciphertext.length + chunk.length);
+        /*
+         The crypto stream error was coming from the additional null packet before the end of the stream
+
+         IE
+            <Buffer a0 4a 2e 8e 2d ce de 12 15 03 7a 42 44 ca 84 88 72 64 77 61 72 65 2f 6f 74 61 5f 63 68 75 6e 6b>
+            <Buffer 5f 73 69 7a 65 ff 35 31 32>
+            null
+            CryptoStream transform error TypeError: Cannot read property 'length' of null
+            Coap Error: Error: Invalid CoAP version. Expected 1, got: 3
+
+        The if statement solves (I believe) all of the node version dependency ussues
+
+        ( Previously required node 10.X, with this tested and working on node 12.5 )
+
+        */
+        if(chunk){
+            if (!ciphertext) {
+                ciphertext = chunk;
+            }
+            else {
+                ciphertext = Buffer.concat([ciphertext, chunk], ciphertext.length + chunk.length);
+            }
         }
     });
     cipher.on('end', function () {
