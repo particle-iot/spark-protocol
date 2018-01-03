@@ -4,10 +4,10 @@
     "main": "./index.js",
     "repository": {
         "type": "git",
-        "url": "https://github.com/spark/spark-protocol"
+        "url": "https://github.com/particle-iot/spark-protocol"
     },
-    "homepage": "https://github.com/spark/spark-protocol",
-    "bugs": "https://github.com/spark/spark-protocol/issues",
+    "homepage": "https://github.com/particle-iot/spark-protocol",
+    "bugs": "https://github.com/particle-iot/spark-protocol/issues",
     "author": {
         "name": "David Middlecamp",
         "email": "david@spark.io",

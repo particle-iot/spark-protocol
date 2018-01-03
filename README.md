@@ -1,7 +1,7 @@
 spark-protocol
 ================
 
-  Node.JS module for hosting direct encrypted CoAP socket connections!  Checkout the local [spark-server](https://github.com/spark/spark-server)
+  Node.JS module for hosting direct encrypted CoAP socket connections!  Checkout the local [spark-server](https://github.com/particle-iot/spark-server)
 
 <pre>
                           __      __        __              __
@@ -21,7 +21,7 @@ What do I need to know?
 What code modules should I start with?
 ============================================
 
-There's lots of fun stuff here, but in particular you should know about the "SparkCore" ( https://github.com/spark/spark-protocol/blob/master/js/clients/SparkCore.js ) , and "DeviceServer" ( https://github.com/spark/spark-protocol/blob/master/js/server/DeviceServer.js ) modules.  The "DeviceServer" module runs a server that creates "SparkCore" objects, which represent your connected devices.
+There's lots of fun stuff here, but in particular you should know about the "SparkCore" ( https://github.com/particle-iot/spark-protocol/blob/master/js/clients/SparkCore.js ) , and "DeviceServer" ( https://github.com/particle-iot/spark-protocol/blob/master/js/server/DeviceServer.js ) modules.  The "DeviceServer" module runs a server that creates "SparkCore" objects, which represent your connected devices.
 
 
 How do I start a server in code?
@@ -43,7 +43,7 @@ How do I get my key / ip address on my core?
 
 1.) Figure out your IP address, for now lets say it's 192.168.1.10
 
-2.) Make sure you have the Spark-CLI (https://github.com/spark/spark-cli) installed
+2.) Make sure you have the Spark-CLI (https://github.com/particle-iot/spark-cli) installed
 
 3.) Connect your Spark Core to your computer in listening mode (http://docs.spark.io/connect/#appendix-dfu-mode-device-firmware-upgrade)
 
@@ -60,7 +60,7 @@ spark keys server server_public_key.der 192.168.1.10
 Where's the API / webserver stuff, this is just a TCP server?
 ===========================================================================
 
-  Oh, you want the Spark-Server module here: https://github.com/spark/spark-server  :)
+  Oh, you want the Spark-Server module here: https://github.com/particle-iot/spark-server  :)
   
   
 

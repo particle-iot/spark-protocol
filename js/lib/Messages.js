@@ -15,7 +15,7 @@
 *   You should have received a copy of the GNU General Public License
 *   along with Spark-protocol.  If not, see <http://www.gnu.org/licenses/>.
 *
-*   You can download the source here: https://github.com/spark/spark-protocol
+*   You can download the source here: https://github.com/particle-iot/spark-protocol
 */
 
 

@@ -370,7 +370,7 @@ Flasher.prototype = extend(IFlasher.prototype, {
 		}
 
 		this.chunk = (this.fileStream) ? this.fileStream.read(this.chunk_size) : null;
-		//workaround for https://github.com/spark/core-firmware/issues/238
+		//workaround for https://github.com/particle-iot/core-firmware/issues/238
 		if (this.chunk && (this.chunk.length != this.chunk_size)) {
 			var buf = new Buffer(this.chunk_size);
 			this.chunk.copy(buf, 0, 0, this.chunk.length);
